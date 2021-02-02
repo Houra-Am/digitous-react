@@ -1,77 +1,101 @@
 import React from "react";
 
 export class Form extends React.Component {
-  constructor(props) {
+  //we need the constructor to initiate some values
+    constructor(props) {
     super(props)
-
     this.state = {
         email: '',
         password: '',
         submit: '',
-        formErrors: {email: '', password: ''},
         emailValid: false,
         passwordValid: false,
-        formValid: false
+        submitClick: false
     }
-  }
+    }
 
-  onChange=(event) => this.handleUserInput(event)
-
-  handleUserInput (e) {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({[name]: value});
-  }
-
+  //since we're inside a class we declare our function without "function"
   handleEmailChange = (event) => {
+    //in order to register the value in state
+    //to update the state of email or ...
+    const newEmail = event.target.value;
+    const reg = /^\S+@\S+\.\S+$/g;
+    const isEmail = reg.test(newEmail);
+
     this.setState({
-        email: event.target.value
+        email: newEmail,
+        emailValid: isEmail
     })
   }
 
   handlePasswordChange = (event) => {
+    let newPasswordValid = false;
+    if (event.target.value.length >= 6) {
+        newPasswordValid = true
+    } else {
+        newPasswordValid = false
+    }
+
       this.setState({
-          password: event.target.value
+          password: event.target.value,
+          passwordValid: newPasswordValid
+      })
+  }
+
+  handleSubmit = (event) => {
+      event.preventDefault();
+      this.setState({
+          submitClick: true
       })
   }
 
 
     render() {
+
+    if (this.state.submitClick === true) {
+    return(<div>SUCCESS</div>)
+    } 
         return(
             <form className="form">
                 <div className="form-group">
                     <label className="email">Email address</label>
                     <input type="email" 
                     name="email"
-                    placeholder="Enter email..."
-                    className="form-control" 
+                    className={ this.state.emailValid ? 'form-control is-valid' : 'form-control is-invalid'}
+                    placeholder="Enter email..." 
                     value={this.state.email}
                     onChange={this.handleEmailChange}
                     ></input>
                 </div>
+
                 <div className="form-group">
                     <label className="password">Password</label>
                     <input type="password"
                     name="password" 
+                    className={this.state.passwordValid ? 'form-control is-valid' : 'form-control is-invalid'}
                     placeholder="Enter password..." 
-                    className="form-control"
                     value={this.state.password}
                     onChange={this.handlePasswordChange}
                     ></input>
                 </div>
-                <div className="form-group form-check">
-                    <label className="form-check-label" htmlFor="invalidCheck">Remember me</label>
-                    <input className="form-check-input"
-                    type="checkbox"/>
+
+                <div>
+                <input className="remember"
+                type="checkbox"/>
+                <label>Remember me</label>
                 </div>
+
                 <button type="submit"
                 className="btn btn-primary"
-                disabled={!this.state.formValid}>
-                    submit
+                onChange={this.handleSubmit}
+                disabled={!this.state.emailValid || !this.state.passwordValid}>
+                submit
                 </button>
             </form>
         )
     }
-}
+
+    }
+
 
 export default Form;
