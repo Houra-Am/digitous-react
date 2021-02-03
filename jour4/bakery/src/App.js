@@ -13,63 +13,53 @@ constructor() {
   this.state = {
     activeTab : 'add',
     items: [],
-    isSelected: false
   }
 }
 
+
 selectAdd = (e) => {
-    this.setState({activeTab: "add"})
+    this.setState({
+      activeTab: "add"
+    })
 }
 selectList = (e) => {
-    this.setState({activeTab: "list"})
+    this.setState({
+      activeTab: "list"
+    })
 }
 selectPay = (e) => {
-    this.setState({activeTab: "pay"})
+    this.setState({
+      activeTab: "pay"
+    })
+}
+
+renderContent() {
+if (this.state.activeTab === 'add') {
+  return <Add></Add>
+}
+if (this.state.activeTab === 'list') {
+  return <List></List>
+}
+if (this.state.activeTab === 'pay') {
+  return <Pay></Pay>
+}
 }
 
   render() {   
     return (
-      <div className="container">
-        <div className="row">
-
+      <div className="App">
 {/* ----> add button <-----*/}
-         <div className="col-md-1 align-self-start">
-         <Button type="button"
-          isSelected={
-          this.state.activeTab==="add"
-          ? "form-control btn btn-primary"
-          : "form-control btn btn-light"}
-        onClick={this.selectAdd}>
-          Add
-         </Button>
-         </div>
-
+         <Button onClick={this.selectAdd} isSelected={this.state.activeTab==="add" ? true : false}> Add</Button>
 {/* ----> list button <-----*/}
-         <div className="col-md-1 align-self-start">
-         <Button type="button"
-          isSelected={
-          this.state.activeTab==="list"
-          ? "form-control btn btn-primary"
-          : "form-control btn btn-light"}
-        onClick={this.selectList}>
-          List
-         </Button>
-        </div>
-
+         <Button onClick={this.selectList} isSelected={this.state.activeTab==="list" ? true : false}> List</Button>
 {/* ----> pay button <-----*/}
-         <div className="col-md-1 align-self-start">
-         <Button type="button"
-          isSelected={
-          this.state.activeTab==="pay"
-          ? "form-control btn btn-primary"
-          : "form-control btn btn-light"}
-        onClick={this.selectPay }>
-          pay
-         </Button>
-         </div>
-
-        </div>
+         <Button onClick={this.selectPay } isSelected={this.state.activeTab==="pay" ? true : false}> pay</Button>       
+         
+         {this.renderContent()}
+      
       </div>
+
+
     )
   }
 }

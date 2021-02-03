@@ -4,13 +4,13 @@ export class Button extends React.Component {
 
 
 render() {
-    const { onClick, children, isSelected} = this.props
     return (
-        <div>
-            <button type="button" className={isSelected} onClick={onClick}> 
-                <p>{children}</p>
+        
+            <button type="button" 
+            onClick={this.props.onClick}
+            className={this.props.isSelected === true ? "btn btn-primary" : "btn btn-light" }> 
+            {this.props.children}
             </button>                  
-        </div>
     )
 }
 }
