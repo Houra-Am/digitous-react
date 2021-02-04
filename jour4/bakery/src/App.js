@@ -6,7 +6,6 @@ import Pay from "./components/Pay";
 import List from "./components/List";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-
 export class App extends React.Component {
 constructor() {
   super();
@@ -15,7 +14,6 @@ constructor() {
     items: [],
   }
 }
-
 
 selectAdd = (e) => {
     this.setState({
@@ -33,12 +31,28 @@ selectPay = (e) => {
     })
 }
 
+toto = (name, price) => {
+  console.log(name)
+  const obj = {
+    name: name,
+    price: price
+  }
+  const newList = this.state.items
+  newList.push(obj)
+
+  this.setState({
+    items: newList
+  })
+}
+
 renderContent() {
 if (this.state.activeTab === 'add') {
-  return <Add></Add>
+  return <Add addItem={this.toto}>
+
+  </Add>
 }
 if (this.state.activeTab === 'list') {
-  return <List></List>
+  return <List listItems={this.state.items}></List>
 }
 if (this.state.activeTab === 'pay') {
   return <Pay></Pay>

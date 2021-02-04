@@ -1,33 +1,54 @@
 import React from 'react';
+const priceMin = 1;
+const priceMax= 10;
 
 export class Add extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          productName: [],
-          price: 1
+          productName: "",
+          price: 1,
         }
       }
+ 
 
-      updateProductName=(e) => {
-
+      updateProductName=(e) => {        
+        this.setState({
+          productName : e.target.value}
+          );
       }
 
-render() {
+      updatePrice = (e) => {  
+          this.setState({
+          price : e.target.value}
+          );
+      }
+
+      slider() {
+      return (<input type="range" onChange={this.updatePrice} 
+      value={this.state.price} min={priceMin} max={priceMax}></input>)
+       }
+
+      add=() =>{
+      this.props.addItem (this.state.productName, this.state.price)
+       }
+
+    render() {
+    const {price, value, item} = this.props;
     return (
-    <div>
-        <form className="form">
-                <div className="form-group">
-                    <label className="text">Email address</label>
-                    <input type="text" 
-                    name="text"
-                    placeholder="Enter email..." 
-                    value={this.state.email}
-                    onChange={this.updateProductName}
-                    ></input>
-                </div>
-       </form>
-    </div>
+       
+      <div className="container">
+            <div className="row form-group">              
+                <input type="text" placeholder="Item" value={this.state.productName} onChange={this.updateProductName} />
+                <p>{this.state.price}{"€"}</p>
+                {this.slider()}
+            </div>
+            <button onClick={this.add} type="submit" className="btn btn-primary">Add</button>           
+      </div>
+       
+            
+
+        
     )
 }
 }
