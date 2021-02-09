@@ -13,31 +13,18 @@ export class App extends React.Component {
         <div>
           <div className='container-fluid'>
             <div className='row'>
+              <Switch>
+                <Route path='/description/:id' component={Description} />
+              </Switch>
+
               {movies.map((data, key) => {
                 return (
                   <div key={key}>
                     {data.id + " . "}
                     <span>
                       <Link to='/'></Link>
-                      <Link to='/Description'>{data.title}</Link>
+                      <Link to={`/Description/${data.id}`}>{data.title}</Link>
                     </span>
-
-                    {/* 
-                    <Link to='/'>Description {data.title}</Link>
-                    <a href={"/" + key}>{data.title}</a>
-                    +
-              " , " +
-              data.director +
-              " , " +
-              data.stars +
-              " , " +
-              data.image +
-              " , " +
-              data.description */}
-                    <Switch>
-                      <Route exact path='/' component={App} />
-                      <Route path='/description/:id' component={Description} />
-                    </Switch>
                   </div>
                 );
               })}

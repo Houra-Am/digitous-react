@@ -5,14 +5,14 @@ export class Description extends React.Component {
   render() {
     return (
       <div className='stock-container'>
-        {movies.map((data, key) => {
+        {movies.map((movie, key) => {
           return (
             <div key={key}>
-              {data.title}
+              <p>Director: {movie.director}</p>
+              <p>Description: {movie.description}</p>
+              <p>{`Stars: ${movie.stars}`}</p>
               <div className='image-container d-flex justify-content-start m-3'>
-                <img
-                  src={movies.image}
-                  alt={`The movie titled: ${movies.title}`}></img>
+                <img src={movies.image}></img>
               </div>
             </div>
           );
